@@ -1,31 +1,32 @@
-import constants from '../../constants';
+import { constants } from "../../constants";
 import {
   validateRegionId,
   validateRegionName,
   getRegionIdByName,
-} from '../localization/regions';
+} from "../localization/regions";
 import {
   ConstantKey,
   RegionIdOrName,
   RegionIdAsNumberOrString,
   RegionName,
-} from '../../types';
+} from "../../types";
 
 export const getConstantByRegionId = (
   regionId: RegionIdAsNumberOrString,
-  constantKey: ConstantKey,
+  constantKey: ConstantKey
 ) => {
-  const regionIdAsString = typeof regionId !== 'string'
-    ? regionId
-    : regionId.toString();
-  const isRegionIdValid = validateRegionId(regionIdAsString);
+  const regionIdAsString =
+    typeof regionId === "string" ? regionId : regionId.toString();
+  const isRegionIdValid = validateRegionId(
+    regionIdAsString as RegionIdAsNumberOrString
+  );
 
   if (!isRegionIdValid) {
     throw new RangeError(
-      `${regionIdAsString} is not a valid parameter for getConstantByRegionId(${regionId}, '${constantKey}')`,
+      `${regionIdAsString} is not a valid parameter for getConstantByRegionId(${regionId}, '${constantKey}')`
     );
   }
-  return constants[constantKey][regionIdAsString];
+  return constants[constantKey][regionId];
 };
 
 /**
@@ -35,12 +36,15 @@ export const getConstantByRegionId = (
  * @param constantKey Constant key
  * @return Uri as a string
  */
-export const getConstantByRegionName = (regionName: RegionName, constantKey: ConstantKey) => {
+export const getConstantByRegionName = (
+  regionName: RegionName,
+  constantKey: ConstantKey
+) => {
   const isRegionNameValid = validateRegionName(regionName);
 
   if (!isRegionNameValid) {
     throw new RangeError(
-      `${regionName} is not a valid parameter for getConstantByRegionName(${regionName}, '${constantKey}')`,
+      `${regionName} is not a valid parameter for getConstantByRegionName(${regionName}, '${constantKey}')`
     );
   }
 
@@ -49,7 +53,16 @@ export const getConstantByRegionName = (regionName: RegionName, constantKey: Con
   return constants[constantKey][regionId];
 };
 
-export const getConstantByRegion = (regionIdOrName: RegionIdOrName, constantKey: ConstantKey) =>
-  (validateRegionId(regionIdOrName)
-    ? getConstantByRegionId(regionIdOrName, constantKey)
-    : getConstantByRegionName(regionIdOrName.toString(), constantKey));
+export const getConstantByRegion = (
+  regionIdOrName: RegionIdOrName,
+  constantKey: ConstantKey
+) =>
+  validateRegionId(regionIdOrName as RegionIdAsNumberOrString)
+    ? getConstantByRegionId(
+        regionIdOrName as RegionIdAsNumberOrString,
+        constantKey
+      )
+    : getConstantByRegionName(
+        regionIdOrName.toString() as RegionName,
+        constantKey
+      );

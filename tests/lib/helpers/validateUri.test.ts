@@ -1,17 +1,17 @@
-import { Uri } from '../../../src/types';
-import { uri as validateUri } from '../../../src/helpers/validators';
+import { Uri } from "../../../src/types";
+import { uri as validateUri } from "../../../src/helpers/validators";
 
-import urisJson from '../../__testData__/uris.json';
-import invalidUrisJson from '../../__testData__/invalidUris.json';
+import urisJson from "../../__testData__/uris.json";
+import invalidUrisJson from "../../__testData__/invalidUris.json";
 
-describe('validateUri()', () => {
-  it('should be defined', () => {
+describe("validateUri()", () => {
+  it("should be defined", () => {
     expect(validateUri).toBeDefined();
   });
 
-  it('should be function', () => {
+  it("should be function", () => {
     expect(validateUri).toBeTruthy();
-    expect(typeof validateUri).toBe('function');
+    expect(typeof validateUri).toBe("function");
   });
 
   (urisJson as ReadonlyArray<Uri>).forEach((uri) => {

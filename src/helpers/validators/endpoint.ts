@@ -1,11 +1,12 @@
-import {
-  ValidatorFunction,
-  Endpoint,
-} from '../../types';
+import { ValidatorFunction, Endpoint } from "../../types";
 
-const startsWithSlash = (endpoint: Endpoint) => endpoint[0] === '/';
+const startsWithSlash = (endpoint: Endpoint) => endpoint[0] === "/";
 const isLongEnough = (endpoint: Endpoint) => endpoint.length > 3;
 
-const validators = [startsWithSlash, isLongEnough] as ReadonlyArray<ValidatorFunction>;
+const validators = [
+  startsWithSlash,
+  isLongEnough,
+] as ReadonlyArray<ValidatorFunction>;
 
-export default (endpoint: Endpoint) => validators.every((validator) => validator(endpoint));
+export const endpointValidator = (endpoint: Endpoint) =>
+  validators.every((validator) => validator(endpoint));

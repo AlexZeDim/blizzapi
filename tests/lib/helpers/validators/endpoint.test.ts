@@ -1,16 +1,16 @@
-import { endpoint as validateEndpoint } from '../../../../src/helpers/validators';
+import { endpoint as validateEndpoint } from "../../../../src/helpers/validators";
 
-import endpointsJson from '../../../__testData__/endpoints.json';
-import invalidEndpointsJson from '../../../__testData__/invalidEndpoints.json';
+import endpointsJson from "../../../__testData__/endpoints.json";
+import invalidEndpointsJson from "../../../__testData__/invalidEndpoints.json";
 
-describe('validateEndpoint()', () => {
-  it('should be defined', () => {
+describe("validateEndpoint()", () => {
+  it("should be defined", () => {
     expect(validateEndpoint).toBeDefined();
   });
 
-  it('should be function', () => {
+  it("should be function", () => {
     expect(validateEndpoint).toBeTruthy();
-    expect(typeof validateEndpoint).toBe('function');
+    expect(typeof validateEndpoint).toBe("function");
   });
 
   (endpointsJson as ReadonlyArray<string>).forEach((endpoint) => {

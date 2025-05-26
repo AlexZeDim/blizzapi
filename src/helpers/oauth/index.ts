@@ -1,3 +1,2 @@
-export { default as fetchAccessToken } from './fetchAccessToken';
-export { default as getAccessToken } from './getAccessToken';
-export { default as validateAccessToken } from './validateAccessToken';
+export { getAccessTokenObject } from "./getAccessTokenObject";
+export { validateAccessToken } from "./validateAccessToken";

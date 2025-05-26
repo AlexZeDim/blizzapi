@@ -13,13 +13,13 @@
 import {
   RegionIdProperties,
   DefaultLocaleIndex,
-} from '../../types';
+  RegionIdEnum,
+} from "../../types";
 
-const defaultLocales: RegionIdProperties<DefaultLocaleIndex> = {
-  1: 0,
-  2: 0,
-  3: 0,
-  5: 0,
-};
-
-export default Object.freeze(defaultLocales);
+export const defaultLocales: RegionIdProperties<DefaultLocaleIndex> =
+  Object.freeze({
+    [RegionIdEnum.us]: DefaultLocaleIndex.us,
+    [RegionIdEnum.eu]: DefaultLocaleIndex.eu,
+    [RegionIdEnum.kr]: DefaultLocaleIndex.kr,
+    [RegionIdEnum.cn]: DefaultLocaleIndex.cn,
+  });

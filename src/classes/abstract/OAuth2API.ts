@@ -1,14 +1,14 @@
-import {
-  ClientId,
-  ClientSecret,
-} from '../../types';
+import { ClientId, ClientSecret } from "../../types";
 
-export default class OAuth2API {
-  readonly clientId: ClientId;
+export abstract class OAuth2API {
+  readonly clientId: ClientId | undefined;
 
-  readonly clientSecret: ClientSecret;
+  readonly clientSecret: ClientSecret | undefined;
 
-  constructor(clientId: ClientId, clientSecret: ClientSecret) {
+  constructor(
+    clientId: ClientId | undefined,
+    clientSecret: ClientSecret | undefined
+  ) {
     this.clientId = clientId;
     this.clientSecret = clientSecret;
   }

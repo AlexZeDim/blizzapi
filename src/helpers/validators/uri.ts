@@ -1,4 +1,4 @@
-import { Uri } from '../../types';
+import { Uri } from "../../types";
 
 /**
  * Validates uri via matching it against regex pattern
@@ -7,7 +7,7 @@ import { Uri } from '../../types';
  * (e.g. https://example.com/api/endpoint)
  * @returns {Boolean} True for valid uri, false for incorrect one
  */
-export default (uri: Uri) => {
+export const uriValidator = (uri: Uri) => {
   // based on https://www.regextester.com/1965
   const uriTestRegex = /(?:http[s]?:\/\/)[^\s(["<,>]*\.[^\s[",><]*/gm;
   return uriTestRegex.test(uri);

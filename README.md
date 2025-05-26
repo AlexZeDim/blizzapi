@@ -1,13 +1,8 @@
-<img src="https://raw.githubusercontent.com/lukemnet/blizzapi-docs/master/docs/.vuepress/public/logo.png" alt="BlizzAPI logo" width="200" height="200">
-
 # BlizzAPI
 
-[![npm (latest)](https://img.shields.io/npm/v/blizzapi/latest.svg)](https://www.npmjs.com/package/blizzapi)
-[![Travis CI Build Status](https://travis-ci.org/lukemnet/blizzapi.svg?branch=master)](https://travis-ci.org/lukemnet/blizzapi)
-[![Maintainability](https://api.codeclimate.com/v1/badges/8c2b8e4efe8441ad055f/maintainability)](https://codeclimate.com/github/lukemnet/blizzapi/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/8c2b8e4efe8441ad055f/test_coverage)](https://codeclimate.com/github/lukemnet/blizzapi/test_coverage) 
+> **This project is no longer maintained or updated. While Battle.net API has been reasonably stable within last few years and that means the library should theoretically continue working for a while, I am no longer able to provide any support or maintenance. In case of bugs or breaking changes, feel free to fork the repo and publish your own updated version.**
 
-Flexible feature-rich library for easy access to [Battle.net API](https://develop.battle.net/).
+Flexible and feature-rich JavaScript / TypeScript library for easy access to Blizzard Battle.net APIs.
 
 ## Install
 
@@ -18,58 +13,36 @@ npm install blizzapi
 ## Quick start
 
 ```javascript
-const BlizzAPI = require('blizzapi');
+const { BlizzAPI } = require("blizzapi");
+
+/**
+ * Or using TypeScript:
+ * import { BlizzAPI } from 'blizzapi';
+ */
 
 const api = new BlizzAPI({
-  region: 'us',
-  clientId: 'client id',
-  clientSecret: 'client secret'
+  region: "us",
+  clientId: "client id",
+  clientSecret: "client secret",
 });
 
-const data = await api.query('/path/to/endpoint');
+const data = await api.query("/path/to/endpoint");
 
 console.log(data);
-``` 
+```
 
 ## Manual build
 
 ```bash
-git clone https://github.com/lukemnet/blizzapi.git
+git clone https://github.com/lwojcik/blizzapi.git
 cd blizzapi
 npm install
 npm run build
 ```
 
-## Documentation & examples
+## Documentation
 
-* [blizzapi.lukem.net](https://blizzapi.lukem.net) - documentation
-* [blizzapi-docs](https://github.com/lukemnet/blizzapi-docs) - documentation repo on GitHub
-
-* [blizzapi-example](https://github.com/lukemnet/blizzapi-example) - sample Express.js REST API with usage examples
-
-* [Repositories that depend on BlizzAPI](https://github.com/lukemnet/blizzapi/network/dependents)
-
-## Contributions
-
-Contributions of any kind are welcome.
-
-You can contribute to BlizzAPI by:
-
-* submiting a bug report or a feature suggestion
-* improving documentation either within the project itself or in the [doc site repository](https://github.com/lukemnet/blizzapi-docs)
-* submitting pull requests
-
-Before contributing be sure to read [Contributing Guidelines](https://github.com/lukemnet/blizzapi/blob/master/CONTRIBUTING.md) and [Code of Conduct](https://github.com/lukemnet/blizzapi/blob/master/CODE_OF_CONDUCT.md).
-
-## Contributors
-
-To all who contribute code, improve documentation, submit issues or feature requests - thank you for making BlizzAPI even better!
-
-We maintain an [AUTHORS](https://github.com/lukemnet/blizzapi/blob/master/AUTHORS) file where we keep a list of all project contributors. Please consider adding your name there with your next PR.
-
-## License
-
-Licensed under MIT License. See [LICENSE](https://github.com/lukemnet/blizzapi/blob/master/LICENSE) for more information.
+See [blizzapi-docs](https://github.com/lwojcik/blizzapi-docs) repo.
 
 ## Legal
 

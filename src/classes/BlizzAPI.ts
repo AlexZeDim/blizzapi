@@ -1,16 +1,15 @@
-import * as helpers from '../helpers';
-import * as utils from '../utils';
-import BattleNetAPI from './abstract/BattleNetAPI';
+import * as helpers from "../helpers";
+import * as utils from "../utils";
+import { BattleNetAPI } from "./abstract/BattleNetAPI";
 import {
   Endpoint,
-  BattleNetOptions,
+  BlizzAPIOptions,
   AccessTokenOptions,
   QueryOptions,
-} from '../types';
+  RegionIdOrName,
+} from "../types";
 
-export interface BlizzAPIOptions extends BattleNetOptions, AccessTokenOptions {}
-
-export default class BlizzAPI extends BattleNetAPI {
+export class BlizzAPI extends BattleNetAPI {
   readonly options: AccessTokenOptions;
 
   constructor(options: BlizzAPIOptions) {
@@ -21,17 +20,18 @@ export default class BlizzAPI extends BattleNetAPI {
       accessToken: options.accessToken,
     });
     this.options = {
-      validateAccessTokenOnEachQuery: options.validateAccessTokenOnEachQuery || false,
+      validateAccessTokenOnEachQuery:
+        options.validateAccessTokenOnEachQuery || false,
       refreshExpiredAccessToken: options.refreshExpiredAccessToken || false,
       onAccessTokenExpired: options.onAccessTokenExpired || undefined,
       onAccessTokenRefresh: options.onAccessTokenRefresh || undefined,
     };
   }
 
-  query = async (endpoint: Endpoint, options?: QueryOptions) =>
-    helpers.query({
+  query = async <T = unknown>(endpoint: Endpoint, options?: QueryOptions) =>
+    helpers.query<T>({
       endpoint,
-      region: this.region,
+      region: options?.region || this.region,
       clientId: this.clientId,
       clientSecret: this.clientSecret,
       accessToken: await this.getAccessToken(),
@@ -40,6 +40,10 @@ export default class BlizzAPI extends BattleNetAPI {
         ...options,
       },
     });
+
+  setRegion(region: RegionIdOrName) {
+    this.region = region;
+  }
 
   static getAllRegions = utils.getAllRegions;
 
@@ -79,7 +83,8 @@ export default class BlizzAPI extends BattleNetAPI {
 
   static isSc2RealmValidForRegionId = utils.isSc2RealmValidForRegionId;
 
-  static getDefaultLocaleNameForRegionId = utils.getDefaultLocaleNameForRegionId;
+  static getDefaultLocaleNameForRegionId =
+    utils.getDefaultLocaleNameForRegionId;
 
   static getAllDefaultLocaleNames = utils.getAllDefaultLocaleNames;
 }

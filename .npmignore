@@ -1,8 +1,9 @@
 src
+.github
 tsconfig.json
-tsconfig.eslint.json
 tslint.json
 .prettierrc
+.prettierignore
 tests
 coverage
 appveyor.yml
@@ -14,4 +15,8 @@ AUTHORS
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 .eslintrc
+.eslintrc.js
 .eslintignore
+rollup.config.js
+rollup.config.mjs
+.husky

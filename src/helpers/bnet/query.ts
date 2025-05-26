@@ -1,38 +1,29 @@
-import { endpoint as validateEndpoint } from '../validators';
-import { getAccessToken, validateAccessToken } from '../oauth';
-import { getApiHostByRegion } from '../../utils/api';
-import { fetchFromUri } from '../fetch';
+import { endpoint as validateEndpoint } from "../validators";
+import { getAccessTokenObject, validateAccessToken } from "../oauth";
+import { getApiHostByRegion } from "../../utils/api";
+import { fetchFromUri } from "../fetch";
 import {
-  RegionIdOrName,
+  BattleNetQueryOptions,
   AccessToken,
-  AccessTokenOptions,
-  QueryOptions,
-} from '../../types';
+  HttpMethod,
+  ResponseError,
+  ErrorCode,
+  ErrorResponseMessage,
+  RegionIdOrName,
+} from "../../types";
 
-interface BattleNetQueryOptions {
-  region: RegionIdOrName;
-  endpoint: string;
-  clientId: string;
-  clientSecret: string;
-  accessToken: AccessToken;
-  options: AccessTokenOptions & QueryOptions;
-}
-
-const queryWithAccessToken = (queryOptions: BattleNetQueryOptions, accessToken: AccessToken) => {
-  const {
-    region,
-    endpoint,
-    options,
-  } = queryOptions;
-  const {
-    headers,
-    params,
-    timeout,
-  } = options;
+const queryWithAccessToken = <T = unknown>(
+  queryOptions: BattleNetQueryOptions,
+  accessToken: AccessToken
+): Promise<T> => {
+  const { region, endpoint, options } = queryOptions;
+  const { headers, params, timeout } = options;
   const validEndpoint = validateEndpoint(endpoint);
-  if (!validEndpoint) throw new RangeError(`${endpoint} is not a valid endpoint.`);
 
-  const apiHost = getApiHostByRegion(region);
+  if (!validEndpoint)
+    throw new RangeError(`${endpoint} is not a valid endpoint.`);
+
+  const apiHost = getApiHostByRegion(region as RegionIdOrName) as string;
   const requestUri = `${apiHost}${endpoint}`;
   const authHeaders = {
     Authorization: `Bearer ${accessToken}`,
@@ -43,45 +34,67 @@ const queryWithAccessToken = (queryOptions: BattleNetQueryOptions, accessToken: 
     ...authHeaders,
   };
 
-  return fetchFromUri({
+  return fetchFromUri<T>({
     uri: requestUri,
-    method: 'GET',
+    method: HttpMethod.GET,
     headers: fetchHeaders,
-    ...params && { params },
-    ...timeout && { timeout },
+    ...(params && { params }),
+    ...(timeout && { timeout }),
   });
 };
 
-export default async (queryOptions: BattleNetQueryOptions) => {
+const handleExpiredAccessToken = async <T = unknown>(
+  queryOptions: BattleNetQueryOptions
+) => {
+  const { onAccessTokenRefresh } = queryOptions.options;
+
+  const newAccessToken = (await getAccessTokenObject(queryOptions))
+    .access_token;
+  onAccessTokenRefresh?.(newAccessToken);
+  return queryWithAccessToken<T>(queryOptions, newAccessToken);
+};
+
+export const query = async <T = unknown>(
+  queryOptions: BattleNetQueryOptions
+): Promise<T | ResponseError> => {
   const { region, accessToken } = queryOptions;
+
   const {
     validateAccessTokenOnEachQuery,
     refreshExpiredAccessToken,
     onAccessTokenExpired,
-    onAccessTokenRefresh,
   } = queryOptions.options;
 
   if (validateAccessTokenOnEachQuery) {
-    const invalidAccessToken = !(await validateAccessToken(region, accessToken));
+    const invalidAccessToken = !(await validateAccessToken(
+      region,
+      accessToken
+    ));
+
     if (invalidAccessToken) {
+      onAccessTokenExpired?.();
+
+      if (refreshExpiredAccessToken) {
+        return handleExpiredAccessToken<T>(queryOptions);
+      }
+
       return {
-        error: 'access_token_invalid',
+        error: ErrorResponseMessage.AccessTokenInvalid,
       };
     }
   }
 
   try {
-    return await queryWithAccessToken(queryOptions, accessToken);
-  } catch (error) {
-    if (error.response && error.response.status === 401) {
+    return await queryWithAccessToken<T>(queryOptions, accessToken);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    if (error.response?.status === ErrorCode.NotAuthorized) {
       onAccessTokenExpired?.();
       if (refreshExpiredAccessToken) {
-        const newAccessToken = await getAccessToken(queryOptions);
-        onAccessTokenRefresh?.(newAccessToken);
-        return queryWithAccessToken(queryOptions, newAccessToken);
+        return handleExpiredAccessToken<T>(queryOptions);
       }
       return Promise.resolve({
-        error: 'access_token_invalid',
+        error: ErrorResponseMessage.AccessTokenExpired,
       });
     }
     throw error;
