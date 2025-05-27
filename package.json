@@ -55,5 +55,8 @@
     "sort-package-json": "^2.10.0",
     "ts-jest": "^29.2.4",
     "typescript": "^5.5.4"
+  },
+  "publishConfig": {
+    "@alexzedim:registry": "https://npm.pkg.github.com"
   }
 }
