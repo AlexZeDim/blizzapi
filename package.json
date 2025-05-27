@@ -1,5 +1,5 @@
 {
-  "name": "blizzapi",
+  "name": "@alexzedim/blizzapi",
   "version": "2.6.6",
   "description": "Flexible and feature-rich library for easy access to Blizzard Battle.net APIs",
   "main": "dist/blizzapi.js",
