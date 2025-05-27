@@ -17,7 +17,7 @@ const queryWithAccessToken = <T = unknown>(
   accessToken: AccessToken
 ): Promise<T> => {
   const { region, endpoint, options } = queryOptions;
-  const { headers, params, timeout } = options;
+  const { headers, params, timeout, proxy } = options;
   const validEndpoint = validateEndpoint(endpoint);
 
   if (!validEndpoint)
@@ -40,7 +40,7 @@ const queryWithAccessToken = <T = unknown>(
     headers: fetchHeaders,
     ...(params && { params }),
     ...(timeout && { timeout }),
-    proxy: options.proxy,
+    ...(proxy && { proxy }),
   });
 };
 
