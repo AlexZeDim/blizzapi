@@ -1,6 +1,6 @@
 import { endpoint as validateEndpoint } from "../validators";
 import { getAccessTokenObject, validateAccessToken } from "../oauth";
-import { getApiHostByRegion } from "../../utils/api";
+import { getApiHostByRegion } from "../../utils";
 import { fetchFromUri } from "../fetch";
 import {
   BattleNetQueryOptions,
@@ -40,6 +40,7 @@ const queryWithAccessToken = <T = unknown>(
     headers: fetchHeaders,
     ...(params && { params }),
     ...(timeout && { timeout }),
+    proxy: options.proxy,
   });
 };
 

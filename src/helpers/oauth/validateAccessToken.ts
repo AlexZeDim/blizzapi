@@ -1,4 +1,4 @@
-import { getCheckTokenUriByRegion } from "../../utils/oauth/checkTokenUris";
+import { getCheckTokenUriByRegion } from "../../utils";
 import { fetchFromUri } from "../fetch";
 import { RegionIdOrName, AccessToken, ErrorResponseMessage } from "../../types";
 

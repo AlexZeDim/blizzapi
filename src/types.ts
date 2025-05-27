@@ -1,4 +1,5 @@
 /** Common */
+import { AxiosProxyConfig } from "axios";
 
 export type Uri = string;
 
@@ -200,6 +201,7 @@ export interface QueryOptions {
   region?: RegionIdOrName;
   headers?: object | Headers;
   params?: object | URLSearchParams;
+  proxy?: AxiosProxyConfig | false;
 }
 
 export interface BattleNetOptions {

@@ -72,4 +72,24 @@ describe("fetchFromUri()", () => {
     });
     expect(response).toMatchSnapshot();
   });
+
+  it("returns correct response for GET request with proxy support", async () => {
+    expect.assertions(1);
+    const response = await fetchFromUri({
+      uri: "http://example.org/valid/endpoint/lastModified",
+      method: "GET" as HttpMethod,
+      params: {
+        data: "custom params",
+      },
+      proxy: {
+        host: "127.0.0.1",
+        port: 8080,
+        auth: {
+          username: "username",
+          password: "password",
+        },
+      },
+    });
+    expect(response).toMatchSnapshot();
+  });
 });
