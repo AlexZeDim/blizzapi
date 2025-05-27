@@ -254,4 +254,27 @@ describe("query()", () => {
     });
     expect(response).toMatchSnapshot();
   });
+
+  it("provide proxy option", async () => {
+    expect.assertions(1);
+
+    const response = await query({
+      region: "us" as RegionName,
+      endpoint: "/valid/endpoint",
+      clientId: "valid_client_id",
+      clientSecret: "valid_client_secret",
+      accessToken: "valid_access_token",
+      options: {
+        proxy: {
+          host: "127.0.0.1",
+          port: 8080,
+          auth: {
+            username: "username",
+            password: "password",
+          },
+        },
+      },
+    });
+    expect(response).toMatchSnapshot();
+  });
 });

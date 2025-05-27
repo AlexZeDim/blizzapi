@@ -20,6 +20,20 @@ exports[`query() calls onAccessTokenRefresh() if provided and refreshExpiredAcce
 }
 `;
 
+exports[`query() provide proxy option 1`] = `
+{
+  "access_token": "valid_access_token",
+  "headers": {
+    "Authorization": "Bearer valid_access_token",
+  },
+  "params": {
+    "data": "default sample params",
+  },
+  "timeout": 10000,
+  "title": "sample mocked data for GET request to https://us.api.blizzard.com/valid/endpoint",
+}
+`;
+
 exports[`query() refreshes access token if refreshExpiredAccessToken is set to true 1`] = `
 {
   "access_token": "new_refreshed_access_token",
