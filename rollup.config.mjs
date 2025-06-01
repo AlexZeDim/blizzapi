@@ -9,7 +9,7 @@ const name = "dist/blizzapi";
 const bundle = (config) => ({
   ...config,
   input: "src/index.ts",
-  external: (id) => !/^[./]/.test(id),
+  external: ["axios"],
 });
 
 // eslint-disable-next-line import/no-default-export
