@@ -202,6 +202,9 @@ export interface QueryOptions {
   headers?: object | Headers;
   params?: object | URLSearchParams;
   proxy?: AxiosProxyConfig | false;
+  transport?: any;
+  httpAgent?: any;
+  httpsAgent?: any;
 }
 
 export interface BattleNetOptions {

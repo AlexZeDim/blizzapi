@@ -15,7 +15,18 @@ interface FetchFromUriOptions extends QueryOptions {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const fetchFromUri = async <T = any>(options: FetchFromUriOptions) => {
-  const { uri, timeout, headers, params, data, auth, proxy } = options;
+  const {
+    uri,
+    timeout,
+    headers,
+    params,
+    data,
+    auth,
+    proxy,
+    transport,
+    httpAgent,
+    httpsAgent,
+  } = options;
 
   const method = options.method || HttpMethod.GET;
 
@@ -34,6 +45,9 @@ export const fetchFromUri = async <T = any>(options: FetchFromUriOptions) => {
     ...(auth && { auth }),
     ...(data && { data }),
     ...(proxy && { proxy }),
+    ...(transport && { transport }),
+    ...(httpAgent && { httpAgent }),
+    ...(httpsAgent && { httpsAgent }),
   } as AxiosRequestConfig;
 
   const response = await axios.request<T>(requestOptions);

@@ -17,8 +17,9 @@ const queryWithAccessToken = <T = unknown>(
   accessToken: AccessToken
 ): Promise<T> => {
   const { region, endpoint, options } = queryOptions;
-  const { headers, params, timeout, proxy } = options;
   const validEndpoint = validateEndpoint(endpoint);
+  const { headers, params, timeout, proxy, transport, httpAgent, httpsAgent } =
+    options;
 
   if (!validEndpoint)
     throw new RangeError(`${endpoint} is not a valid endpoint.`);
@@ -41,6 +42,9 @@ const queryWithAccessToken = <T = unknown>(
     ...(params && { params }),
     ...(timeout && { timeout }),
     ...(proxy && { proxy }),
+    ...(transport && { transport }),
+    ...(httpAgent && { httpAgent }),
+    ...(httpsAgent && { httpsAgent }),
   });
 };
 

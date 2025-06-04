@@ -273,6 +273,10 @@ describe("query()", () => {
             password: "password",
           },
         },
+        // --- npm i https-proxy-agent --- //
+        httpsAgent: true, // new HttpsProxyAgent('http://168.63.76.32:3128')
+        httpAgent: true, // new HttpProxyAgent('http://168.63.76.32:3128')
+        transport: true, // new transport()
       },
     });
     expect(response).toMatchSnapshot();
