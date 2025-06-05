@@ -18,6 +18,9 @@ export class BlizzAPI extends BattleNetAPI {
       clientId: options.clientId,
       clientSecret: options.clientSecret,
       accessToken: options.accessToken,
+      httpAgent: options.httpsAgent,
+      httpsAgent: options.httpsAgent,
+      transport: options.transport,
     });
     this.options = {
       validateAccessTokenOnEachQuery:
@@ -25,6 +28,9 @@ export class BlizzAPI extends BattleNetAPI {
       refreshExpiredAccessToken: options.refreshExpiredAccessToken || false,
       onAccessTokenExpired: options.onAccessTokenExpired || undefined,
       onAccessTokenRefresh: options.onAccessTokenRefresh || undefined,
+      httpAgent: options.httpAgent,
+      httpsAgent: options.httpsAgent,
+      transport: options.transport,
     };
   }
 

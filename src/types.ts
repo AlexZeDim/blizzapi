@@ -194,6 +194,9 @@ export interface AccessTokenOptions {
   refreshExpiredAccessToken?: boolean;
   onAccessTokenExpired?: () => void;
   onAccessTokenRefresh?: (newAccessToken: string) => void;
+  transport?: any;
+  httpAgent?: any;
+  httpsAgent?: any;
 }
 
 export interface QueryOptions {
@@ -212,6 +215,9 @@ export interface BattleNetOptions {
   clientId?: ClientId;
   clientSecret?: ClientSecret;
   accessToken?: AccessToken;
+  transport?: any;
+  httpAgent?: any;
+  httpsAgent?: any;
 }
 
 export interface BattleNetQueryOptions {
